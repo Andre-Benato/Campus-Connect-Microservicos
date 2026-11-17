@@ -1,5 +1,7 @@
 ## Microservicos
 
+Nome dos integrantes: André Gabriel Benato, Arthur Markowicz Lopes, Gustavo Tissot França, Luigi Morgenstern Milani
+
 | Servico | Pasta | Porta (host) | Responsabilidade |
 |---------|-------|--------------|------------------|
 | user-service | [`user-service/`](user-service/README.md) | `8081` | Cadastro de usuarios, login/logout JWT, `POST /api/v1/auth/validate` |
