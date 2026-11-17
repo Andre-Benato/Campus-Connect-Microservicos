@@ -2,7 +2,6 @@
 
 | Servico | Pasta | Porta (host) | Responsabilidade |
 |---------|-------|--------------|------------------|
-| **gateway-service** | [`gateway-service/`](gateway-service/README.md) | `8090` | **Ponto unico de entrada** (API Gateway + BFF): proxy, CORS, rastreio e agregacao |
 | user-service | [`user-service/`](user-service/README.md) | `8081` | Cadastro de usuarios, login/logout JWT, `POST /api/v1/auth/validate` |
 | apartment-service | [`apartment-service/`](apartment-service/README.md) | `8080` | CRUD de apartamentos; valida o Bearer token chamando o user-service |
 | chat-service | [`chat-service/`](chat-service/README.md) | `8082` | Chat 1:1 (REST + STOMP/WebSocket); persiste no MongoDB; valida Bearer via user-service; consome `RideRequestAccepted` do Azure Service Bus |
@@ -12,7 +11,6 @@
 
 | Serviço | Swagger UI | OpenAPI JSON |
 |---------|------------|--------------|
-| gateway-service | `http://localhost:8090/swagger-ui.html` | `http://localhost:8090/v3/api-docs` |
 | user-service | `http://localhost:8081/swagger-ui.html` | `http://localhost:8081/v3/api-docs` |
 | apartment-service | `http://localhost:8080/swagger-ui.html` | `http://localhost:8080/v3/api-docs` |
 | chat-service | `http://localhost:8082/swagger-ui.html` | `http://localhost:8082/v3/api-docs` |
@@ -52,19 +50,6 @@ cp .env.example .env
 - Chat (Compose): `CHAT_MONGODB_URI=mongodb://mongo:27017/campusconnect_chat`
 - Gateway local: `USER_SERVICE_URL=http://localhost:8081`, `APARTMENT_SERVICE_URL=http://localhost:8080`, `CHAT_SERVICE_URL=http://localhost:8082`, `CARONA_SERVICE_URL=http://localhost:8083`
 - Service Bus: preencha `AZURE_SERVICEBUS_CONNECTION_STRING` para ativar o fluxo assincrono carona → chat[text](../CampusConnect/MeuSistema.md)
-
-## Subir com Docker Compose
-
-```bash
-docker compose up --build
-```
-
-- **gateway-service:** `http://localhost:8090` (ponto unico recomendado)
-- user-service: `http://localhost:8081`
-- apartment-service: `http://localhost:8080`
-- chat-service: `http://localhost:8082`
-- carona-service: `http://localhost:8083`
-- mongo: interno ao Compose (sem porta publicada por padrao)
 
 ## Fluxo tipico via Gateway
 
@@ -141,7 +126,6 @@ cd user-service && mvn spring-boot:run
 cd apartment-service && mvn spring-boot:run
 cd chat-service && mvn spring-boot:run
 cd carona-service && mvn spring-boot:run
-cd gateway-service && mvn spring-boot:run
 ```
 
 Testes (SQL Server / Mongo via Testcontainers nos servicos de dominio):
@@ -151,5 +135,4 @@ cd user-service && mvn test
 cd apartment-service && mvn test
 cd chat-service && mvn test
 cd carona-service && mvn test
-cd gateway-service && mvn test
 ```
